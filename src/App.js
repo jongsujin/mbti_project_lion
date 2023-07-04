@@ -13,7 +13,6 @@ function App() {
     <div className="App">
        <div className="header">
         <h3>MBTI</h3>
-        <button id="go_admin">관리자페이지</button>
       </div>
       <Routes>
         <Route path="/" element={<HomePage/>}/>

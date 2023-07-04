@@ -3,11 +3,13 @@ import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 function HomePage(){
     let navigate = useNavigate();
-    const [mbti,setMbti] = useState('');
+    let [mbti,setMbti] = useState([]);
+    let [mbtiContent, setMbtiContent] = useState('');
     const mbtiSubmit = async () => {
       try {
         const data = {
           mbti: mbti,
+          mbtiContent : mbtiContent,
         };
   
         await axios.post('http://localhost:5000/api/mbti', data);
@@ -16,10 +18,17 @@ function HomePage(){
         console.error(error);
       }
     };
+    const SelectMbtiButton = (value) => {
+    
+        setMbti((prevMbti) => {
+          return prevMbti + value;
+        });
+    };
   
     const mbtiInput = (e) => {
       setMbti(e.target.value);
     };
+   
   
 
     
@@ -27,21 +36,18 @@ function HomePage(){
     return(
     <>
     <div className="mbti_select">
-      <button id="mbti_e">E</button>
-      <button id="mbti_s">S</button>
-      <button id="mbti_t">T</button>
-      <button id="mbti_j">J</button>
-      <button id="mbti_text">에너지 방향</button>
-      <button id="mbti_text">인식 방식</button>
-      <button id="mbti_text">판단</button>
-      <button id="mbti_text">생활 양식</button>
-      <button id="mbti_i">I</button>
-      <button id="mbti_n">N</button>
-      <button id="mbti_f">F</button>
-      <button id="mbti_p">P</button>
+      <button id="mbti_e" onClick={()=>(SelectMbtiButton('E'))}>E</button>
+      <button id="mbti_s" onClick={()=>(SelectMbtiButton('S'))}>S</button>
+      <button id="mbti_t" onClick={()=>(SelectMbtiButton('T'))}>T</button>
+      <button id="mbti_j" onClick={()=>(SelectMbtiButton('J'))}>J</button>
+      <button id="mbti_i" onClick={()=>(SelectMbtiButton('I'))}>I</button>
+      <button id="mbti_n" onClick={()=>(SelectMbtiButton('N'))}>N</button>
+      <button id="mbti_f" onClick={()=>(SelectMbtiButton('F'))}>F</button>
+      <button id="mbti_p" onClick={()=>(SelectMbtiButton('P'))}>P</button>
      </div>
      <div className="input_mbti">
-     <input type="text" placeholder="MBTI를 입력하세요" value={mbti} onChange={mbtiInput}></input><button id="go_result" onClick={mbtiSubmit}>입력</button>
+     <input type="text" placeholder="MBTI를 입력하세요" value={mbti}></input><button id="go_result" onClick={mbtiSubmit}>입력</button>
+     
      </div>
      </>
     );
